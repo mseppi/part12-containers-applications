@@ -1,0 +1,86 @@
+Script started on 2025-10-16 07:00:05+03:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="101" LINES="12"]
+[?2004h]0;mseppi@ms: ~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;32mmseppi@ms[00m:[01;34m~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;31m(main)[00m$ docker ps
+[?2004ldoCONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                           NAMES
+f5d5b77749b0   mongo     "docker-entrypoint.s…"   50 minutes ago   Up 15 minutes   0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+[?2004h]0;mseppi@ms: ~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;32mmseppi@ms[00m:[01;34m~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;31m(main)[00m$ docke[Ker exec  -it todo-backend-mongo-1 bash
+[?2004l[?2004hroot@f5d5b77749b0:/# [7mmongosh -u root -p example[27m
+[Aroot@f5d5b77749b0:/# mongosh -u root -p example
+[A
+[?2004l]0;mongosh mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	68f06de32e0985c2dcce5f46
+Connecting to:		[1m[32mmongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8[0m
+Using MongoDB:		8.0.15
+[1m[33mUsing Mongosh[0m:		2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+[1G[0J [1G[?2004h[1m[33m------[0m
+   [1m[33mThe server generated these startup warnings when booting[0m
+   2025-10-16T03:44:56.011+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2025-10-16T03:44:56.774+00:00: Soft rlimits for open file descriptors too low
+   2025-10-16T03:44:56.774+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2025-10-16T03:44:56.774+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2025-10-16T03:44:56.774+00:00: We suggest setting the contents of sysfsFile to 0.
+   2025-10-16T03:44:56.774+00:00: We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.
+[1m[33m------[0m
+
+[1G[0Jtest> [7Gshow dbs
+[1madmin[0m         100.00 KiB
+[1mconfig[0m        108.00 KiB
+[1mlocal[0m          72.00 KiB
+[1mthe_database[0m   72.00 KiB
+[1G[0Jtest> [7Guse the_database
+switched to db the_database
+[1G[0Jthe_database> [15Gshow collections
+[1mtodos[0m
+[1G[0Jthe_database> [15Gsb.[1G[0Jthe_database> sb[17G[1G[0Jthe_database> s[16G[1G[0Jthe_database> [15Gdb,t[1G[0Jthe_database> db,[18G[1G[0Jthe_database> db[17G.todos.find
+db.todos.find               db.todos.findOne            db.todos.findOneAndDelete
+db.todos.findOneAndReplace  db.todos.findOneAndUpdate
+
+[1G[0Jthe_database> db.todos.find[28G{()}[1G[0Jthe_database> db.todos.find{()[31G[1G[0Jthe_database> db.todos.find{([30G[1G[0Jthe_database> db.todos.find{[29G[1G[0Jthe_database> db.todos.find[28G({})
+[
+  {
+    _id: ObjectId([32m'68f062237ace743e8ace5f47'[39m),
+    text: [32m'new text'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'68f062237ace743e8ace5f48'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gdb [1G[0Jthe_database> db[17G[1G[0Jthe_database> d[16G[1G[0Jthe_database> [15Gdb.todos.insertOne({
+[1G[0J... [5G  text: [32m"[39m[32mI[39m[32mn[39m[32mc[39m[32mr[39m[32me[39m[32ma[39m[32ms[39m[32me[39m [32mt[39m[32mh[39m[32me[39m [32mn[39m[32mu[39m[32mm[39m[32mb[39m[32me[39m[32mr[39m [32mo[39m[32mf[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m[32ms[39m [32mi[39m[32mn[39m [32mm[39m[32my[39m [32mt[39m[32mo[39m[32mo[39m[32ml[39m [32mb[39m[32me[39m[32ml[39m[32mt[39m[32m"[39m,
+[1G[0J... [5G  d[36mdo[39mdone: fals[33mfalse[39m
+[1G[0J... [5G})
+[1G[0J... [5G
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId([32m'68f06e0a2e0985c2dcce5f47'[39m)
+}
+[1G[0Jthe_database> [15Gdb.todos.find({})
+[1G[0J... [5G
+[
+  {
+    _id: ObjectId([32m'68f062237ace743e8ace5f47'[39m),
+    text: [32m'new text'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'68f062237ace743e8ace5f48'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'68f06e0a2e0985c2dcce5f47'[39m),
+    text: [32m'Increase the number of tools in my tool belt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gexit
+[?2004l[?2004hroot@f5d5b77749b0:/# [?2004l
+exit
+[?2004h]0;mseppi@ms: ~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;32mmseppi@ms[00m:[01;34m~/fullstack_kurssi/part12-containers-applications/todo-app/todo-backend[01;31m(main)[00m$ exit
+[?2004lexit
+
+Script done on 2025-10-16 07:01:33+03:00 [COMMAND_EXIT_CODE="0"]
