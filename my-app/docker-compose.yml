@@ -10,8 +10,6 @@ services:
       context: ./library-backend
       dockerfile: Dockerfile
     image: library-back:prod
-    ports:
-      - "4000:4000"
     environment:
       - MONGODB_URI=mongodb://root:example@mongo:27017/library_db?authSource=admin
       - JWT_SECRET=${JWT_SECRET:-secret}

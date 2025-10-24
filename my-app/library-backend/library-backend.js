@@ -72,15 +72,10 @@ const start = async () => {
       context: async ({ req }) => {
         const auth = req ? req.headers.authorization : null
         if (auth && auth.toLowerCase().startsWith('bearer ')) {
-          try {
-            const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET)
-            const currentUser = await User.findById(decodedToken.id)
-            return { currentUser }
-          } catch (error) {
-            console.warn('Invalid JWT provided, ignoring token:', error.message)
-          }
+          const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET)
+          const currentUser = await User.findById(decodedToken.id)
+          return { currentUser }
         }
-        return {}
       },
     }),
     )
