@@ -1,0 +1,43 @@
+services:
+  library-frontend:
+    image: library-front-dev
+    build:
+      context: ./library-frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./library-frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - VITE_BACKEND_URL=/graphql
+
+  library-backend:
+    build:
+      context: ./library-backend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./library-backend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongo:27017/library_db?authSource=admin
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: library_db
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+
+  nginx:
+    image: nginx:1.20.1
+    container_name: my-app-nginx
+    depends_on:
+      - library-frontend
+      - library-backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
